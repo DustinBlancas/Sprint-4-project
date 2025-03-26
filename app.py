@@ -30,10 +30,19 @@ filtered_df = df[(df['model_year'] != 0) & (df['odometer'] != 0)]
 avg_lot_days = filtered_df.groupby(['price', 'model_year', 'model', 'condition', 'odometer'])['days_listed'].mean().reset_index()
 avg_lot_days.head()
 
+min_year = df['model_year'].min()
+max_year = df['model_year'].max()
+min_price = df['price'].min()
+max_price = df['price'].max()
+   
+
 st.header('Vehicle Data Analysis')
 show_plot = st.checkbox('Show Scatter Plot of Model Year vs. Price')
 if show_plot:
     fig = px.scatter(df, x='model_year', y='price', title='Model Year vs. Price')
+    fig.update_xaxes(range=[min_year, max_year])
+    fig.update_yaxes(range=[min_price, max_price])
+    fig.update_traces(marker=dict(size=4, opacity=0.6))
     st.plotly_chart(fig)
 
 avg_odometer = filtered_df.groupby('model_year')['odometer'].mean().reset_index()
@@ -49,4 +58,5 @@ model_vs_dayslisted.update_layout(
 model_vs_dayslisted.update_traces(marker=dict(size=5, opacity=0.7))
 model_vs_dayslisted.update_layout(width=1000, height=600)
 st.plotly_chart(model_vs_dayslisted)
+
 
