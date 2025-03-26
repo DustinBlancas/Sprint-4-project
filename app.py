@@ -38,7 +38,7 @@ if show_plot:
 
 avg_odometer = filtered_df.groupby('model_year')['odometer'].mean().reset_index()
 fig = px.bar(avg_odometer, x='model_year', y='odometer', title='Average Odometer by Model Year')
-fig.show()
+st.plotly_chart(fig)
 
 model_vs_dayslisted = px.scatter(filtered_df, x='model', y='days_listed', title='Days Listed Depending On Model Type')
 model_vs_dayslisted.update_xaxes(tickangle=-45)
@@ -48,5 +48,5 @@ model_vs_dayslisted.update_layout(
 )
 model_vs_dayslisted.update_traces(marker=dict(size=5, opacity=0.7))
 model_vs_dayslisted.update_layout(width=1000, height=600)
-model_vs_dayslisted.show()
+st.plotly_chart(model_vs_dayslisted)
 
